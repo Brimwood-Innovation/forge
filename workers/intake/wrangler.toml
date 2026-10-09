@@ -1,0 +1,36 @@
+# forge-intake — task-intake Worker.
+# POST /task forks an Artifacts repo per agent task and returns a scoped token.
+#
+# COMPETITION SPRINT NOTE: dev and preview deploys are free to run.
+# Production deploys happen only on the founder's explicit word.
+
+name = "forge-intake"
+main = "src/index.ts"
+compatibility_date = "2026-10-01"
+workers_dev = true
+
+[vars]
+# Non-secret config: the Artifacts project that new task repos are forked from.
+# Create it after Workers Paid is active, e.g.:
+#   curl -X POST "https://api.cloudflare.com/client/v4/accounts/$ACCOUNT_ID/artifacts/namespaces" \
+#     -H "Authorization: Bearer $CLOUDFLARE_API_TOKEN" \
+#     --json '{"namespace":"forge"}'
+PROJECT_NAME = "forge-template"
+
+# ---------------------------------------------------------------------------
+# ARTIFACTS BINDING — requires the Workers Paid plan (Artifacts open beta).
+# Until Paid is active this binding cannot be created and every Artifacts
+# call in src/ fails at runtime with a clear error. To wire up:
+#   1. Activate Workers Paid in the Cloudflare dashboard (founder action).
+#   2. Create the Artifacts namespace (see PROJECT_NAME above).
+#   3. Uncomment the block below.
+# ---------------------------------------------------------------------------
+# [[artifacts]]
+# binding = "ARTIFACTS"
+
+# Preview environment: isolated worker name and template project.
+[env.preview]
+name = "forge-intake-preview"
+
+[env.preview.vars]
+PROJECT_NAME = "forge-template-preview"

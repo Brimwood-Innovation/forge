@@ -1,0 +1,33 @@
+# forge-review — review Worker.
+# Consumes Artifacts push events from a queue, reviews each push, merges on approval.
+#
+# COMPETITION SPRINT NOTE: dev and preview deploys are free to run.
+# Production deploys happen only on the founder's explicit word.
+
+name = "forge-review"
+main = "src/index.ts"
+compatibility_date = "2026-10-01"
+workers_dev = true
+
+# The queue that Artifacts push events are subscribed to.
+# Create it once:  wrangler queues create forge-review-events
+[[queues.consumers]]
+queue = "forge-review-events"
+max_batch_size = 10
+max_retries = 3
+
+# ---------------------------------------------------------------------------
+# ARTIFACTS BINDING — requires the Workers Paid plan (Artifacts open beta).
+# Until Paid is active this binding cannot be created and every Artifacts
+# call in src/ fails at runtime with a clear error. To wire up:
+#   1. Activate Workers Paid in the Cloudflare dashboard (founder action).
+#   2. Create the Artifacts namespace.
+#   3. Uncomment the block below.
+# ---------------------------------------------------------------------------
+# [[artifacts]]
+# binding = "ARTIFACTS"
+
+# Preview environment: isolated worker name. Uses the same queue in preview;
+# create a separate "forge-review-events-preview" queue for full isolation if needed.
+[env.preview]
+name = "forge-review-preview"
