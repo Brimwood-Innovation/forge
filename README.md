@@ -1,3 +1,17 @@
+<!-- PREPEND to forge/README.md, above the existing "# Forge" heading -->
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Forge-Agent--native%20Git-0C9463" alt="Agent-native Git" />
+  <img src="https://img.shields.io/badge/Built%20on-Cloudflare%20Workers%20%2B%20Artifacts-0C9463" alt="Cloudflare Workers + Artifacts" />
+  <img src="https://img.shields.io/badge/Licence-MIT-0C9463" alt="MIT" />
+</p>
+
+```text
+$ forge task "your task here"
+→ isolated repo forked · scoped token issued · push reviewed automatically
+```
+
+---
 # Forge
 
 **The Git platform for the agentic era — built on Cloudflare Workers + Artifacts.**
